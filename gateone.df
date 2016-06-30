@@ -17,7 +17,7 @@ ENV SSHD_COMMAND_AFTER ""
 
 WORKDIR "/dcr/cm.d"
 
-VOLUME ["/etc/ssh"]
+VOLUME ["/data"]
 
 # -D    not detach and does not become a daemon
 # -e    send the output to the standard error instead of the system log
