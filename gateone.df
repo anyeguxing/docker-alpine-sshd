@@ -4,8 +4,9 @@ EXPOSE 22 443
 
 ENV PASSWD root
 RUN \
+  sed -i s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/ /etc/apk/repositories
   apk --no-cache add openssh openssl python py-pip   && \
-  pip install gateone
+  pip install gateone -i https://pypi.tuna.tsinghua.edu.cn/simple
   VOL-save /etc/ssh && \
   echo "root:${PASSWD}" | chpasswd
 
