@@ -7,8 +7,7 @@ RUN \
   sed -i s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/ /etc/apk/repositories && \
   apk --no-cache add openssh openssl python py-pip   && \
   pip install  --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple gateone && \
-  VOL-save /etc/ssh && \
-  echo "root:${PASSWD:-root}" | chpasswd
+  VOL-save /etc/ssh
 
 # Default config overrides
 ENV SSHD_OPTION_PERMIT_ROOT_LOGIN yes
@@ -25,7 +24,7 @@ VOLUME ["/etc/ssh"]
 # -o    give options in the format used in the configuration file
 RUN \
   echo "VOL-restore /etc/ssh;" > 010-volumes-100-etc-ssh && \
-  echo "ssh-keygen -A;" > 100-sshd-050-init && \
+  echo "ssh-keygen -A;echo "root:\${PASSWD:-root}" | chpasswd" > 100-sshd-050-init && \
   echo "nohup /usr/sbin/sshd \
     -D \
     -e \
@@ -33,4 +32,4 @@ RUN \
     -o UseDNS=\$SSHD_OPTION_USE_DNS \
     \$SSHD_COMMAND_AFTER &" > 100-sshd-100-default
 RUN \
-  echo "gateone --url_prefix=/\${URL_PREFIX:-ssh} --dtach --disable_ssl" > 101-gateone-101-init
+  echo "gateone --url_prefix=/\${URL_PREFIX:-ssh} --disable_ssl" > 101-gateone-101-init
