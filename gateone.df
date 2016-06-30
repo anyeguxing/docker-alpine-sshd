@@ -25,13 +25,13 @@ VOLUME ["/etc/ssh"]
 # -e    send the output to the standard error instead of the system log
 # -o    give options in the format used in the configuration file
 RUN \
-#  echo "VOL-restore /etc/ssh;" > 010-volumes-100-etc-ssh && \
+  echo "VOL-restore /etc/ssh;" > 010-volumes-100-etc-ssh && \
   echo "ssh-keygen -A;" > 100-sshd-050-init && \
   echo "nohup /usr/sbin/sshd \
     -D \
     -e \
     -o PermitRootLogin=\$SSHD_OPTION_PERMIT_ROOT_LOGIN \
     -o UseDNS=\$SSHD_OPTION_USE_DNS \
-    $SSHD_COMMAND_AFTER & ;" > 100-sshd-100-default
+    \$SSHD_COMMAND_AFTER &" > 100-sshd-100-default
 RUN \
   echo "gateone --url_prefix=/${url_prefix} --dtach --disable_ssl" > 101-gateone-101-init
