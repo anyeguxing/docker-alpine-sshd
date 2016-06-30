@@ -7,7 +7,7 @@ RUN \
   sed -i s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/ /etc/apk/repositories && \
   apk --no-cache add openssh openssl python py-pip   && \
   pip install  --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple gateone && \
-  VOL-save /etc/ssh
+  VOL-save /data
 
 # Default config overrides
 ENV SSHD_OPTION_PERMIT_ROOT_LOGIN yes
@@ -23,7 +23,7 @@ VOLUME ["/etc/ssh"]
 # -e    send the output to the standard error instead of the system log
 # -o    give options in the format used in the configuration file
 RUN \
-  echo "VOL-restore /etc/ssh;" > 010-volumes-100-etc-ssh && \
+  echo "VOL-restore /data;ln -sf /data/ssh /etc/ssh" > 010-volumes-100-etc-ssh && \
   echo "ssh-keygen -A;echo "root:\${PASSWD:-root}" | chpasswd" > 100-sshd-050-init && \
   echo "nohup /usr/sbin/sshd \
     -D \
