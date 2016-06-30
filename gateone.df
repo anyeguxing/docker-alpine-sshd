@@ -32,6 +32,6 @@ RUN \
     -e \
     -o PermitRootLogin=\$SSHD_OPTION_PERMIT_ROOT_LOGIN \
     -o UseDNS=\$SSHD_OPTION_USE_DNS \
-    \$SSHD_COMMAND_AFTER & ;" > 100-sshd-100-default
+    $SSHD_COMMAND_AFTER & ;" > 100-sshd-100-default
 RUN \
   echo "gateone --url_prefix=/${url_prefix} --dtach --disable_ssl" > 101-gateone-101-init
