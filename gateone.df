@@ -34,4 +34,4 @@ RUN \
     -o UseDNS=\$SSHD_OPTION_USE_DNS \
     \$SSHD_COMMAND_AFTER ;" > 100-sshd-100-default
 RUN \
-  echo "nohup gateone --url_prefix=/${url_prefix} &" > 100-gateone-100-default
+  echo "gateone --url_prefix=/${url_prefix} --dtach" > 100-gateone-100-default
